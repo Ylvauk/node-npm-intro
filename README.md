@@ -14,22 +14,20 @@ Learn about server-side JavaScript with Node and NPM.
 
 By the end of this, developers should be able to:
 
-- Identify and discuss high-level differences between server-side and
-  client-side JavaScript
+- Identify and discuss high-level differences between server-side and client-side JavaScript
 - Import and export Node modules
 - Use npm to install and manage dependencies in projects and globally
 - Use Node to work with the file system
 - Publish an npm module to the npm registry
 
-As a bonus, if there is time, we will discuss building a basic server
-application from scratch using Node.
+As a bonus, we will discuss building a basic server application from scratch using Node.
 
 ## Introduction
 
 Today, we're going to embark on the next leg of our journey in learning full
 stack web development. So far, we've just learned to write client-side JavaScript
-that is loaded into our browsers via an HTML file. We have also used React to create 
-more dynamic client-side applications that run in the browser. There's another kind of 
+that is loaded into our browsers via an HTML file. We have also used React to create
+more dynamic client-side applications that run in the browser. There's another kind of
 JavaScript that we have yet to learn.
 
 If we're not writing JavaScript _for_ our browsers to run, then what exactly are
@@ -38,91 +36,41 @@ why and how are we concerned with servers as web developers?
 
 ### Turn and Talk
 
-Turn to your neighbor and discuss the following questions:
+In your breakout groups discuss the following questions:
 
 - In plain English, what does a server do?
 - Have we had exposure to any servers so far? Give some examples.
 
 ## The Role of the Server
 
-The server provides as much functionality as we want it to. That can mean
-performing really resource-heavy computation (like with large amounts of data),
-reading and writing from a database, or responding to a request.
+In computing, a **server** can be any program or device that provides functionality for other programs or devices, called **clients**. Every time you visit a website or use a web application, you're making a request to a _server_.  Your browser, in this case, is the _client_.  The World Wide Web is principally comprised of servers that all follow a common set of rules for communicating with clients called Hypertext Transfer Protocol or [HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview#Components_of_HTTP-based_systems) (more on this later).
 
-You don't want to do heavy-lifting in the browser, especially when dealing with
-mobile devices, because those heavy-lifting tasks will require a lot of
-resources. So, we put that code on the server.
+The job of the _server_ is to **respond** to _client_ **requests**. If a server application receives a request it can't fulfill, the rules dictate that it must still provide a response. If a server doesn't respond with anything, we know that it's down or that something has gone wrong with our connection to the server.
 
-In web development, the most common job of a _server_ is to **respond** to
-_client_ **requests**. If a server application receives a request it can't
-fulfill, it still provides a response. If a server doesn't respond with
-anything, we'll assume that it is down or that something has gone wrong with our
-connection.
+This is the 'contract' between servers and clients: when a client makes a request, the server must respond, even if the response is that it can't perform the job that was requested. We call this paradigm [request-response](https://en.wikipedia.org/wiki/Request%E2%80%93response).  In the case of the Web, we refer to this more specifically as the _HTTP request-response cycle_.
 
-![client-server](./assets/client-server.png)
+In unit one, our use of servers was limited entirely to **web servers** that simply stored HTML, CSS, JS and media (images, video, etc.) files and sent that content to our browsers when requested.  These included our Live Server that we ran locally and the servers that Github used to make it possible to share our apps via the Web. In unit two, we also made use of third-party APIs that ran on servers independent of our web server.
 
-There is a 'contract' between servers and clients where a _client makes requests
-to a server_ and the _server responds to the request_. This is a paradigm known
-as [request-response](https://en.wikipedia.org/wiki/Request%E2%80%93response).
-The rules laid down by this paradigm enforce a standard baseline for a reliable
-internet we've all come to enjoy.
+Now that we'll be building our own APIs, we have to dig into how to program these types of servers.  Browsers can only understand HTML, CSS and JS, but we don't have those limitations when we are building a server application.  We can choose from dozens of languages. In this program, we'll be exploring how to do create server-based applications with JavaScript in this unit and then we'll take a look at how to do this with Python in the next.
 
-In a practical sense, every time you visit a website (like `http://google.com`)
-you're seeing what's been requested and returned from a server.
+## What is NodeJS?
 
-So far, all our applications have run entirely in the browser. We did deploy
-them, so users could use our applications from anywhere. But, the code for our
-application was only executed in their browser, with no connection to anyone
-else using our application. Very, very few applications work like that in the
-real world.
+NodeJS is a JavaScript runtime for building server-side applications. It's what we use when we want to program in JavaScript outside of the browser.
 
-So how do we make applications in such a way that different users can interact
-with each other through them from different clients?
+To make sense of this, it's helpful to understand a little bit more about what JavaScript is.  JavaScript is not owned or controlled by a single company or individual.  It's known as an _open standard_.  The standard that it is based on is called ECMAScript because it's maintained by an international standards group known as the European Computer Manufacturers (ECMA).  Within this standards organization, a committee called TC39 is responsible for creating the specifications that guide companies who build browsers and other systems that interpret JavaScript on how it should behave and what features it should have.  The committee is made up of members from across the industry (such as employees from Google, Microsoft and Apple) as well as other stakeholders.
 
-We use a server!
+TC39 just writes specifications, it's up to the browser companies and open source community to actually implement those standards.  This is what makes it possible for websites and web applications to work in many different browsers.  It's also why they sometimes don't work or behave differently in a specific browser &mdash; because a browser hasn't implemented a feature in JavaScript or hasn't implemented it correctly.
 
-## What is Node?
+[Node](https://nodejs.org/), then, is just another implementation of the JavaScript specification.  It's actually based on the V8 engine that runs JavaScript in Chromium (the open source project that powers many browsers like Chrome, Opera and now Microsoft's Edge browser).
 
-Node is a server-side runtime of JavaScript.
+What's important about Node, though, and what makes it a little different from the browser implementations, is that it is aimed at running JavaScript in a server environment, not a browser!
 
-What does that mean? To answer that, we have to rethink our understanding of
-JavaScript.
+That means there are some practical differences in how we write JavaScript in Node versus for a browser. It also means there is a lot of server specific functionality that will only work in Node.
 
-Most programming languages have different versions of the language. As new
-features are rolled out, they are released in a new version of the language.
-JavaScript has this as well, but is unique in that JavaScript is run in multiple
-different environments. So there isn't just one "JavaScript", there are many.
+### You do: Node vs. the Browser
 
-The implementations of JavaScript are different in different browsers, i.e. the
-language is different in Chrome, Firefox, Internet Explorer, etc. Each
-implementation follows the same specification, which is maintained and updated
-by a central committee called TC39, but each vendor is in charge of their own
-implementation.
-
-While nowadays, these implementations are largely standardized, there are still
-some differences. For instance, the `forEach` method is implemented on NodeLists
-in all major browsers except Internet Explorer! So if you have some code that
-runs something like `document.querySelector('.class').forEach()`, it will throw
-an error on IE, because that browser doesn't have a method called `forEach`
-defined on that object.
-
-[Node](https://nodejs.org/), then, is just another implementation of the
-JavaScript specification.
-
-What's important about Node, though, and what makes it a little different from
-the browser implementations, is that it is aimed at running JavaScript in a
-server environment, not a browser!
-
-That means there are some practical differences in how we write JavaScript in
-Node versus for a browser. It also means there is a lot of server specific
-functionality that will only work in Node.
-
-### [Seeing the Difference](https://git.generalassemb.ly/dc-wdi-node-express/browser-server-js)
-
-Let's explore the similarities and differences between JavaScript in the browser
-(which you're already familiar and comfortable with) and on the Server (what
-we're learning now). Work through
-[this exercise](https://git.generalassemb.ly/dc-wdi-node-express/browser-server-js)
+Let's explore the similarities and differences between JavaScript in the browser and in Node. Work through
+[this exercise](https://git.generalassemb.ly/seir-129/browser-server-js)
 
 ## Your First Node Application
 
@@ -134,13 +82,10 @@ We're going to explore working with Node and npm in our `sandbox` directory.
 1. Create a new directory called `hello-node` and `cd` into it.
 1. Create a file called `index.js` and edit it in your text editor.
 1. Console log 'hello world'.
-1. Create an array with at least three items, assign it to a variable, and
-   console log it.
-1. Create an object with at least two properties, assign it to a variable, and
-   console log it.
+1. Create an array with at least three elements, that is assignedto a variable, and console log the variable.
+1. Create an object with at least two properties, that is assigned to variable, and console log it.
 1. Write a DOM method like `document.querySelector()` and see what happens.
-1. In your command line and enter the command `node index.js`. Make sure you're
-   in the same directory as the file you're trying to run.
+1. In your command line and enter the command `node index.js`. Make sure you're in the same directory as the file you're trying to run.
 
 **Review Questions:**
 
@@ -161,13 +106,11 @@ The `package.json` file is used to describe details about our project - one of
 those details is the project's dependencies. They're stored in a key in the file
 called `dependencies`!
 
-Here's what a typical `package.json` dependency might look like for a
-medium-sized project:
+Here's what the dependencies in a `package.json` might look like for a project:
 
 ```json
 "dependencies": {
   "bcrypt-nodejs": "0.0.3",
-  "body-parser": "^1.18.2",
   "connect-flash": "^0.1.1",
   "cookie-parser": "^1.4.3",
   "express": "^4.16.2",
@@ -182,25 +125,9 @@ medium-sized project:
 
 ### Aside: node_modules and .gitignore
 
-Let's say we want to work on someone else's project. We clone it down to our
-computer, and then open it up and start exploring the file structure. You've
-already done this with the first JS checkpoint.
+Each of the dependencies in our project may have dependencies itself.  This is why when you look into `node_modules` directory of your projects, you're likely to see hundreds if not 1000+ modules (a typical create-react-app has 1013 node modules)!  So, we definitely don't want to have to store all these modules in Github. This is where we'll rely on `.gitignore` to make sure that Git doesn't track any of the files in the `node_modules` directory. If the files aren't tracked by Git, they can never be sync'd up to Github.
 
-It's got various javascript files, and also a `package.json` file describing all
-the modules needed to run the code.
-
-Since `package.json` is a list of all of our dependencies, where do those files
-all actually live? In the `node_modules` folder. Wait - there's no
-`node_modules` folder!
-
-In order to **install** all of the dependencies, we run the command
-`npm install` in the directory we cloned down. This command goes to the npm
-server and downloads a bunch of javascript files and puts them into the
-`node_modules` folder.
-
-Since we have a list of dependencies in the `package.json` file, and anyone that
-clones a project down can simply download all the dependencies, we don't want to
-include them in our git history. This is where the `.gitignore` comes in.
+Maybe you're concerned that if our projects need these modules to run, wouldn't it be safer to put them in Github?  Fear not!  Since our `package.json` describes everything that is needed to run our projects if you (or someone else) need to reproduce the environment that an application runs in, you can clone or download it from Github and run `npm install` in the project's directory.  The install command retrieves all of the modules from npm described in the `package.json` and puts them into the `node_modules` folder.  It then updates the `package-lock.json` with all of the details about what was installed.
 
 ### Instructions
 
@@ -209,23 +136,18 @@ include them in our git history. This is where the `.gitignore` comes in.
 1. In the command line, in your project directory, run:
 
 ```sh
+npm init -y
+```
+
+Use `ls` and note that we now have a file called `package.json`
+
+```sh
 npm install lodash
 ```
 
-Note what happened. A folder called `node_modules` appeared!
+Using `ls` again we should see that `node_modules` appeared and it contains a dependency of `lodash` in it.  Additionally, we now have a `package-lock.json` file.
 
-Note what didn't happen - there's no `package.json` file. What do we need to do
-to make that appear?
-
-```sh
-npm init
-```
-
-It should already have a dependency of `lodash` in it, from the previous
-`npm install lodash` command.
-
-We don't want git to track all the node modules files. There are way too many
-and it bloats the size of our project.
+We don't want git to track all the node modules files. There are way too many and it bloats the size of our project.
 
 Let's set up a new git project in this directory.
 
@@ -235,7 +157,9 @@ git init
 
 2. Create a file called `.gitignore` in the root of your project directory.
 
-   > `touch .gitignore`
+```sh
+touch .gitignore
+```
 
 3. Open `.gitignore` and type `node_modules` into it.
 
@@ -274,8 +198,7 @@ const randomBear = _.sample(variousBrownBears);
 console.log(randomBear);
 ```
 
-6. Next, let's create a new file called `bears.js` and add the array of brown
-   bears, removing it from `index.js`.
+6. Next, let's create a new file called `bears.js` and add **only** the array of brown bears, and remove the array from `index.js`.
 
 Add the following to `bears.js`:
 
@@ -283,7 +206,7 @@ Add the following to `bears.js`:
 module.exports = variousBrownBears;
 ```
 
-4. Then, in `index.js` add the following:
+4. Then, in `index.js` add the following to the top of the page after the lodash require statement and before the `randomBear` variable:
 
 ```js
 const variousBrownBears = require("./bears");
@@ -324,7 +247,7 @@ Update your `index.js` file with this code snippet:
 ```js
 const fs = require("fs");
 
-/* 
+/*
 fs is the node filesystem module. We're importing it from the node standard library, which is always in scope (part of the standard node modules), so we don't provide a path at the beginning of the line.
 */
 
@@ -348,9 +271,7 @@ Let's break this down:
 
 Go ahead and run this file in your terminal by typing `node index.js`.
 
-#### Turn & Talk
-
-Turn and discuss what just happened with your neighbor.
+What just happened?
 
 ### Read From a File
 
