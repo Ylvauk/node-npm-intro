@@ -68,7 +68,7 @@ That means there are some practical differences in how we write JavaScript in No
 ### You do: Node vs. the Browser
 
 Let's explore the similarities and differences between JavaScript in the browser and in Node. Work through
-[this exercise](https://git.generalassemb.ly/seir-129/browser-server-js)
+[this exercise](https://git.generalassemb.ly/sei-921/browser-server-js)
 
 ## Your First Node Application
 
