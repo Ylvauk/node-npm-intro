@@ -36,8 +36,6 @@ why and how are we concerned with servers as web developers?
 
 ### Turn and Talk
 
-In your breakout groups discuss the following questions:
-
 - In plain English, what does a server do?
 - Have we had exposure to any servers so far? Give some examples.
 
