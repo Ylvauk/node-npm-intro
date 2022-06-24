@@ -35,8 +35,8 @@ why and how are we concerned with servers as web developers?
 
 ### Turn and Talk
 
-- In plain English, what does a server do?
 - Have we had exposure to any servers so far? Give some examples.
+- In plain English, what does a server do?
 
 ## The Role of the Server
 
@@ -82,7 +82,7 @@ We're going to explore working with Node and npm in our `code-alongs` directory.
 1. Create an array with at least three elements, that is assigned to a variable, and console log the variable.
 1. Create an object with at least two properties, that is assigned to variable, and console log it.
 1. Write a DOM method like `document.querySelector()`
-1. In your command line and enter the command `node index.js`. Make sure you're in the same directory as the file you're trying to run.
+1. In your command line, enter the command `node index.js`. Make sure you're in the same directory as the file you're trying to run.
 
 **Review Questions:**
 
