@@ -46,6 +46,8 @@ The job of the _server_ is to **respond** to _client_ **requests**. If a server 
 
 This is the 'contract' between servers and clients: when a client makes a request, the server must respond, even if the response is that it can't perform the job that was requested. We call this paradigm [request-response](https://en.wikipedia.org/wiki/Request%E2%80%93response).  In the case of the Web, we refer to this more specifically as the _HTTP request-response cycle_.
 
+<img width="432" alt="Screen Shot 2022-01-12 at 12 54 24 PM" src="https://miro.medium.com/max/1146/1*bx2bWzqeKCBndthiLGMK5g.png">
+
 In unit one, our use of servers was limited entirely to **web servers** that simply stored HTML, CSS, JS and media (images, video, etc.) files and sent that content to our browsers when requested.  These included our Live Server that we ran locally and the servers that Github used to make it possible to share our apps via the Web. In unit two, we also made use of third-party APIs that ran on servers independent of our web server.
 
 Now that we'll be building our own APIs, we have to dig into how to program these types of servers.  Browsers can only understand HTML, CSS and JS, but we don't have those limitations when we are building a server application.  We can choose from dozens of languages. In this program, we'll be exploring how to do create server-based applications with JavaScript in this unit and then we'll take a look at how to do this with Python in the next.
@@ -54,7 +56,7 @@ Now that we'll be building our own APIs, we have to dig into how to program thes
 
 NodeJS is a JavaScript runtime for building server-side applications. It's what we use when we want to program in JavaScript outside of the browser.
 
-To make sense of this, it's helpful to understand a little bit more about what JavaScript is.  JavaScript is not owned or controlled by a single company or individual.  It's known as an _open standard_.  The standard that it is based on is called ECMAScript because it's maintained by an international standards group known as the European Computer Manufacturers (ECMA).  Within this standards organization, a committee called TC39 is responsible for creating the specifications that guide companies who build browsers and other systems that interpret JavaScript on how it should behave and what features it should have.  The committee is made up of members from across the industry (such as employees from Google, Microsoft and Apple) as well as other stakeholders.
+To make sense of this, it's helpful to understand a little bit more about what JavaScript is.  JavaScript is not owned or controlled by a single company or individual.  It's known as an _open standard_.  The standard that it is based on is called ECMAScript because it's maintained by an international standards group known as the European Computer Manufacturers (ECMA).  You can view the standards [here](https://www.ecma-international.org/publications-and-standards/standards/ecma-262/). Within this standards organization, a committee called TC39 is responsible for creating the specifications that guide companies who build browsers and other systems that interpret JavaScript on how it should behave and what features it should have.  The committee is made up of members from across the industry (such as employees from Google, Microsoft and Apple) as well as other stakeholders.
 
 TC39 just writes specifications, it's up to the browser companies and open source community to actually implement those standards.  This is what makes it possible for websites and web applications to work in many different browsers.  It's also why they sometimes don't work or behave differently in a specific browser &mdash; because a browser hasn't implemented a feature in JavaScript or hasn't implemented it correctly.
 
@@ -67,21 +69,19 @@ That means there are some practical differences in how we write JavaScript in No
 ### You do: Node vs. the Browser
 
 Let's explore the similarities and differences between JavaScript in the browser and in Node. Work through
-[this exercise](https://git.generalassemb.ly/sei-921/browser-server-js)
+[this exercise](../../../browser-server-js)
 
 ## Your First Node Application
 
-We're going to explore working with Node and npm in our `sandbox` directory.
+We're going to explore working with Node and npm in our `code-alongs` directory.
 
 ### Instructions
 
-1. Navigate to your `sandbox`
-1. Create a new directory called `hello-node` and `cd` into it.
-1. Create a file called `index.js` and edit it in your text editor.
+1. Open your `index.js` file from the previous exercise in your text editor.
 1. Console log 'hello world'.
-1. Create an array with at least three elements, that is assignedto a variable, and console log the variable.
+1. Create an array with at least three elements, that is assigned to a variable, and console log the variable.
 1. Create an object with at least two properties, that is assigned to variable, and console log it.
-1. Write a DOM method like `document.querySelector()` and see what happens.
+1. Write a DOM method like `document.querySelector()`
 1. In your command line and enter the command `node index.js`. Make sure you're in the same directory as the file you're trying to run.
 
 **Review Questions:**
@@ -128,9 +128,11 @@ Maybe you're concerned that if our projects need these modules to run, wouldn't 
 
 ### Instructions
 
-> Still in your `hello-node` directory
+1. Navigate to your `code-along` directory.
+2. Create a new directory called `hello-node` and `cd` into it.
+3. Create a file called `index.js` and edit it in your text editor.
 
-1. In the command line, in your project directory, run:
+4. In the command line, in your project directory, run:
 
 ```sh
 npm init -y
@@ -152,15 +154,15 @@ Let's set up a new git project in this directory.
 git init
 ```
 
-2. Create a file called `.gitignore` in the root of your project directory.
+5. Create a file called `.gitignore` in the root of your project directory.
 
 ```sh
 touch .gitignore
 ```
 
-3. Open `.gitignore` and type `node_modules` into it.
+6. Open `.gitignore` and type `node_modules` into it.
 
-4. You're done!
+7. You're done!
 
 You can put the names of any files or folders in the `.gitignore` file. They
 will all be ignored. They won't be deleted from git though - you must use
@@ -168,7 +170,7 @@ will all be ignored. They won't be deleted from git though - you must use
 folder, adding it to `.gitignore` doesn't delete the folder. It simply stops
 paying attention to it.
 
-5. In `index.js`:
+8. In `index.js`:
 
 ```js
 const _ = require("lodash");
@@ -195,7 +197,7 @@ const randomBear = _.sample(variousBrownBears);
 console.log(randomBear);
 ```
 
-6. Next, let's create a new file called `bears.js` and add **only** the array of brown bears, and remove the array from `index.js`.
+9. Next, let's create a new file called `bears.js` and add **only** the array of brown bears, and remove the array from `index.js`.
 
 Add the following to `bears.js`:
 
@@ -203,13 +205,13 @@ Add the following to `bears.js`:
 module.exports = variousBrownBears;
 ```
 
-4. Then, in `index.js` add the following to the top of the page after the lodash require statement and before the `randomBear` variable:
+10. Then, in `index.js` add the following to the top of the page after the lodash require statement and before the `randomBear` variable:
 
 ```js
 const variousBrownBears = require("./bears");
 ```
 
-5. Run `node index.js` from the command-line.
+11. Run `node index.js` from the command-line.
 
 **Review Questions:**
 
@@ -228,7 +230,7 @@ the file system.
 
 ### Set up
 
-1. Create a new folder in your `sandbox` directory, call it `node-fs`
+1. Create a new folder in your `code-alongs` directory, call it `node-fs`
 1. `cd` into `node-fs` and create a file called `index.js`
 
 ### Write to a file
@@ -367,11 +369,11 @@ Run the script again in your terminal, and check the results in `file.txt`. What
 happens if you don't stringify it first? Try just writing the `pojo` object to
 the file and then look at it.
 
-## Lab: [Build Your Own Node Module](https://git.generalassemb.ly/SEIR-teams-materials/npm-resume)
+## Lab: [Build Your Own Node Module](../../../npm-resume)
 
 Let's build off of our work with `fs` and JSON and build out your resume as a
 node module and publish it to the npm registry! Work through
-[this repository](https://git.generalassemb.ly/seir-921/npm-resume).
+[this repository](../../../npm-resume).
 
 ## Additional Resources
 
